@@ -318,9 +318,10 @@ GameObject:
   m_Component:
   - component: {fileID: 853902506}
   - component: {fileID: 853902505}
+  - component: {fileID: 853902507}
   m_Layer: 0
   m_Name: Game Manager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -337,6 +338,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342005468ca6def4888f3ffae7b45361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGame:
+    m_PersistentCalls:
+      m_Calls: []
+  transit:
+    m_PersistentCalls:
+      m_Calls: []
+  stop:
+    m_PersistentCalls:
+      m_Calls: []
+  gator:
+    m_PersistentCalls:
+      m_Calls: []
+  fish:
+    m_PersistentCalls:
+      m_Calls: []
+  fail:
+    m_PersistentCalls:
+      m_Calls: []
+  end:
+    m_PersistentCalls:
+      m_Calls: []
+  debugState: 0
 --- !u!4 &853902506
 Transform:
   m_ObjectHideFlags: 0
@@ -352,3 +375,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &853902507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853902504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad01710546eae7e4b89bba3b067cd7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
