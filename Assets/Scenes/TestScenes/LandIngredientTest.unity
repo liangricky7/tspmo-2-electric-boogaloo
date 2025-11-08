@@ -159,10 +159,10 @@ MonoBehaviour:
   - Bell Pepper
   - Garlic
   landSprites:
-  - {fileID: 21300000, guid: 644817bf341df442e973d44e64da4943, type: 3}
-  - {fileID: 21300000, guid: f48419d9ae5324e6f8db6a2b560e3290, type: 3}
-  - {fileID: 21300000, guid: cf9e964ec8e3a4d01bb1eda2378e8f5e, type: 3}
-  - {fileID: 21300000, guid: 8f345329f4f4347888f4c7bde73db129, type: 3}
+  - {fileID: 21300000, guid: 4d1edcb8ca79149c6b51844c73ad6278, type: 3}
+  - {fileID: 21300000, guid: ef7acce3356c940cb971e60b520c61b4, type: 3}
+  - {fileID: 21300000, guid: 0cb5fcd9c1727403589d45489df5a3ab, type: 3}
+  - {fileID: 21300000, guid: cd836f05fccf84dfaaa8e72e9a8386cb, type: 3}
 --- !u!4 &1426625598
 Transform:
   m_ObjectHideFlags: 0
