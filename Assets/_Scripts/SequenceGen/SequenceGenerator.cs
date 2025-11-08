@@ -29,50 +29,86 @@ public class SequenceGenerator : MonoBehaviour
         {
             StartCoroutine(ExitHandler());
         }
-        if (sequence[currentIndex] == 0) // left
+        if (currentIndex < sequence.Length && sequence[currentIndex] == 0) // left
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
             }
+            else if (Input.anyKeyDown)
+            {
+                arrowSquares[currentIndex].Wrong();
+                for (int i = 0; i < arrowSquares.Length; i++)
+                {
+                    arrowSquares[i].TurnOn();
+                }
+                currentIndex = 0;
+            }
         }
-        else if (sequence[currentIndex] == 1) // down
+        else if (currentIndex < sequence.Length && sequence[currentIndex] == 1) // down
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
             }
+            else if (Input.anyKeyDown)
+            {
+                arrowSquares[currentIndex].Wrong();
+                for (int i = 0; i < arrowSquares.Length; i++)
+                {
+                    arrowSquares[i].TurnOn();
+                }
+                currentIndex = 0;
+            }
         }
-        else if (sequence[currentIndex] == 2) // up
+        else if (currentIndex < sequence.Length && sequence[currentIndex] == 2) // up
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
             }
+            else if (Input.anyKeyDown)
+            {
+                arrowSquares[currentIndex].Wrong();
+                for (int i = 0; i < arrowSquares.Length; i++)
+                {
+                    arrowSquares[i].TurnOn();
+                }
+                currentIndex = 0;
+            }
         }
-        else if (sequence[currentIndex] == 3) // right
+        else if (currentIndex < sequence.Length && sequence[currentIndex] == 3) // right
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
             }
+            else if (Input.anyKeyDown)
+            {
+                arrowSquares[currentIndex].Wrong();
+                for (int i = 0; i < arrowSquares.Length; i++)
+                {
+                    arrowSquares[i].TurnOn();
+                }
+                currentIndex = 0;
+            }
         }
     }
 
     int[] GenerateSequence()
     {
-        int length = Random.Range(4, 5);
+        int length = Random.Range(4, 7);
         int[] newSequence = new int[length];
         arrowSquares = new ArrowSquare[length];
 
         for (int i = 0; i < newSequence.Length; i++)
         {
             newSequence[i] = Random.Range(0, 3);
-            arrowSquares[i] = Instantiate(arrowPrefabs[newSequence[i]], new Vector3(transform.position.x +  (i * 1.2f) - (length * 2f / 5), transform.position.y, 0), Quaternion.identity).GetComponent<ArrowSquare>();
+            arrowSquares[i] = Instantiate(arrowPrefabs[newSequence[i]], new Vector3(transform.position.x +  (i * 1.2f) - (length * 2.2f / 5), transform.position.y, 0), Quaternion.identity).GetComponent<ArrowSquare>();
             arrowSquares[i].transform.SetParent(transform);
         }
         Debug.Log("Generated sequence: " + string.Join(", ", newSequence));
