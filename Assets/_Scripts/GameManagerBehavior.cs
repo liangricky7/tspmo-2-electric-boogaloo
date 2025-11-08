@@ -91,9 +91,4 @@ public class GameManager : MonoBehaviour
         }
         previousDebugState = debugState;
     }
-
-    public void stopBoat()
-    {
-        Instantiate(gatorObject);
-    }
 }

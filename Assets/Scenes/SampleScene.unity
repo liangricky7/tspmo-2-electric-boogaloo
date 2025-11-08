@@ -344,9 +344,9 @@ MonoBehaviour:
   transit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191899712185417883, guid: 4ed077feee1f15d49a5fce37b84365f0, type: 3}
-        m_TargetAssemblyTypeName: Alligator, Assembly-CSharp
-        m_MethodName: selfDelete
+      - m_Target: {fileID: 1512776764}
+        m_TargetAssemblyTypeName: GatorHolder, Assembly-CSharp
+        m_MethodName: destroyGator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -359,9 +359,9 @@ MonoBehaviour:
   stop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 853902505}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: stopBoat
+      - m_Target: {fileID: 1512776764}
+        m_TargetAssemblyTypeName: GatorHolder, Assembly-CSharp
+        m_MethodName: instantiateGator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -409,3 +409,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad01710546eae7e4b89bba3b067cd7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1512776763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512776765}
+  - component: {fileID: 1512776764}
+  m_Layer: 0
+  m_Name: gaitah holdah
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1512776764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512776763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9b91e3a2d0b9847ac2ce719432b22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gator: {fileID: 1191899712185417880, guid: 4ed077feee1f15d49a5fce37b84365f0, type: 3}
+  gatorHolder: {fileID: 1512776765}
+--- !u!4 &1512776765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512776763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.04573666}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
