@@ -5,14 +5,20 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    [HideInInspector]
     public UnityEvent menu;
+    [HideInInspector]
     public UnityEvent transit;
+    [HideInInspector]
     public UnityEvent stop;
+    [HideInInspector]
     public UnityEvent fish;
+    [HideInInspector]
     public UnityEvent lose;
+    [HideInInspector]
     public UnityEvent end;
 
-    enum DebugStateEnum
+    enum StateEnum
     {
         menu,
         transit,
@@ -21,74 +27,62 @@ public class GameManager : MonoBehaviour
         lose,
         end,
     }
-    [SerializeField] private DebugStateEnum debugState;
-    private DebugStateEnum previousDebugState;
+    [SerializeField] private StateEnum state;
+    private StateEnum previousState;
 
     public GameObject gatorObject;
 
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager Instance;
+
+    void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Inputs
-        if (Input.GetKeyDown("1"))
+        if (state != previousState)
         {
-            debugState = DebugStateEnum.menu;
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            debugState = DebugStateEnum.transit;
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            debugState = DebugStateEnum.stop;
-        }
-        if (Input.GetKeyDown("4"))
-        {
-            debugState = DebugStateEnum.fish;
-        }
-        if (Input.GetKeyDown("5"))
-        {
-            debugState = DebugStateEnum.lose;
-        }
-        if (Input.GetKeyDown("6"))
-        {
-            debugState = DebugStateEnum.end;
-        }
-
-        if (debugState != previousDebugState)
-        {
-            switch (debugState)
+            switch (state)
             {
-                case DebugStateEnum.menu:
+                case StateEnum.menu:
                     menu.Invoke();
                     break;
-                case DebugStateEnum.transit:
+                case StateEnum.transit:
                     transit.Invoke();
                     break;
-                case DebugStateEnum.stop:
+                case StateEnum.stop:
                     stop.Invoke();
                     break;
-                case DebugStateEnum.fish:
+                case StateEnum.fish:
                     fish.Invoke();
                     break;
-                case DebugStateEnum.lose:
+                case StateEnum.lose:
                     lose.Invoke();
                     break;
-                case DebugStateEnum.end:
+                case StateEnum.end:
                     end.Invoke();
                     break;
                 default:
                     Debug.Log("Invalid state found for switch statement in GameManagerBehavior:");
-                    Debug.Log(debugState);
+                    Debug.Log(state);
                     break;
             }
         }
-        previousDebugState = debugState;
+        previousState = state;
+    }
+
+    public void FishState()
+    {
+        state = StateEnum.menu;
     }
 }
