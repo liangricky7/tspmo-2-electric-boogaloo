@@ -6,24 +6,24 @@ public class Crocodile : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     bool isAttacking = false;
-    private float chanceToAttack = 60f; // 1 in X chance each second
+    private int chanceToAttack = 3; // 1 in X chance each second
 
-    // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(1f, 1f, 1f, 0.6f);   
-        StartCoroutine("CrocCheck");
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);   
+        StartCoroutine(HitCroc());
     }
 
-    IEnumerable CrocCheck()
+    IEnumerator CrocCheck()
     {
-        Debug.Log("Croc Checking...");
         while (!isAttacking)
         {
             yield return new WaitForSeconds(1f);
-            if (Random.Range(0, chanceToAttack) == 1)
+            int chance = Random.Range(1, chanceToAttack); // independently defined for debugging purposes
+            if (chance == 1)
             {
+                isAttacking = true;
                 AttackBoat();
             }
         }
@@ -31,7 +31,6 @@ public class Crocodile : MonoBehaviour
 
     void AttackBoat()
     {
-        isAttacking = true;
         Debug.Log("Croc Attacking!");
         spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         StartCoroutine(HitCroc());
@@ -47,10 +46,12 @@ public class Crocodile : MonoBehaviour
             {
                 hitCount--;
                 spriteRenderer.color = new Color(1f, 0f, 0f, 1f);
+                yield return new WaitForSeconds(0.1f);
+                spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
             }
+            yield return null;
         }
         Retreat();
-        yield return 0;
     }
     
     void Retreat()
