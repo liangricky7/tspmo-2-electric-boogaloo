@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Alligator : MonoBehaviour
 {
+
+
     SpriteRenderer spriteRenderer;
     bool isAttacking = false;
     private int chanceToAttack = 40; // 1 in X chance each second
@@ -64,5 +66,10 @@ public class Alligator : MonoBehaviour
         isAttacking = false;
         yield return new WaitForSeconds(2f); // grace period before next attack
         StartCoroutine(GatorCheck());
+    }
+
+    public void selfDelete()
+    {
+        Destroy(this); //Self-deletes gator when boat is moving
     }
 }

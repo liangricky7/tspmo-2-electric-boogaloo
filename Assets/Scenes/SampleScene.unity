@@ -338,28 +338,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342005468ca6def4888f3ffae7b45361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGame:
+  menu:
     m_PersistentCalls:
       m_Calls: []
   transit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1191899712185417883, guid: 4ed077feee1f15d49a5fce37b84365f0, type: 3}
+        m_TargetAssemblyTypeName: Alligator, Assembly-CSharp
+        m_MethodName: selfDelete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   stop:
     m_PersistentCalls:
-      m_Calls: []
-  gator:
-    m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 853902505}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: stopBoat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   fish:
     m_PersistentCalls:
       m_Calls: []
-  fail:
+  lose:
     m_PersistentCalls:
       m_Calls: []
   end:
     m_PersistentCalls:
       m_Calls: []
   debugState: 0
+  gatorObject: {fileID: 1191899712185417880, guid: 4ed077feee1f15d49a5fce37b84365f0, type: 3}
 --- !u!4 &853902506
 Transform:
   m_ObjectHideFlags: 0
