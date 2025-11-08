@@ -7,19 +7,21 @@ public class SequenceGenerator : MonoBehaviour
     [SerializeField]
     private Object[] arrowPrefabs;
     private ArrowSquare[] arrowSquares;
-    int[] sequence;
+    public int[] sequence;
     int currentIndex = 0;
 
-    public void ResetSequence()
+
+    public void ResetSequence(int length)
     {
-        sequence = GenerateSequence();
+        sequence = GenerateSequence(length);
         currentIndex = 0;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        sequence = GenerateSequence();
+        //used for debugging, but properly not used in actual testing.
+        // sequence = GenerateSequence(2);
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class SequenceGenerator : MonoBehaviour
     {
         if (currentIndex >= sequence.Length)
         {
-            StartCoroutine(ExitHandler());
+            KillSequence();
         }
         if (sequence[currentIndex] == 0) // left
         {
@@ -65,7 +67,12 @@ public class SequenceGenerator : MonoBehaviour
 
     int[] GenerateSequence()
     {
-        int length = Random.Range(4, 5);
+        return GenerateSequence(Random.Range(4, 5));
+    }
+
+
+    int[] GenerateSequence(int length)
+    {
         int[] newSequence = new int[length];
         arrowSquares = new ArrowSquare[length];
 
@@ -79,10 +86,18 @@ public class SequenceGenerator : MonoBehaviour
 
         return newSequence;
     }
-    
+
     IEnumerator ExitHandler()
     {
         yield return new WaitUntil(arrowSquares[arrowSquares.Length - 1].GetAnimDone);
         Destroy(gameObject);
     }
+
+    public void KillSequence()
+    {
+        currentIndex = 0;
+        StartCoroutine(ExitHandler());
+    }
+
+
 }
