@@ -48,7 +48,7 @@ public class Fishing : MonoBehaviour
             }
         }
     }
-
+    
     IEnumerator CatchFish() // fish appears, player must react and do qt
     {
         float timer = 0f;
