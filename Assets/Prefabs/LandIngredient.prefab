@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1900366088818749131}
   - component: {fileID: 1900366088818749132}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Picture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1338b33b67e054161a98f116f5d7aa09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ingredientSpriteRenderer: {fileID: 1900366088818749132}
 --- !u!114 &1900366089529844002
 MonoBehaviour:
   m_ObjectHideFlags: 0
