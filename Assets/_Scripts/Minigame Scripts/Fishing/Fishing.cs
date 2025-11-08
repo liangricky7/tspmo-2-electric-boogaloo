@@ -1,47 +1,93 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Versioning;
 using UnityEngine;
 
 public class Fishing : MonoBehaviour
 {
+    public GameObject quickTimePrefab; //game object
     [SerializeField]
-    public GameObject quicktime; //game object
+    private SpriteRenderer fishingIndicator;
+    [SerializeField]
+    private Transform fishingSpot;
+    private bool isFishing = false;
+    private int chanceToFish = 5; // 1 in X chance each second
 
-    public GameObject temp;
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
+        fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+    void OnEnable()
+    {
+        // Subscribe when enabled
+        GameManager.Instance.FishEvent.AddListener(StartFishing);
+    }
+
+    void OnDisable()
+    {
+        // IMPORTANT: Unsubscribe to prevent memory leaks
+        GameManager.Instance.FishEvent.RemoveListener(StartFishing);
+    }
+
+    void StartFishing()
+    {
+        StartCoroutine(FishCheck());
+    }
+
+    IEnumerator FishCheck() // waiting for fish
+    {
+        Debug.Log("enter fish check");
+        while (!isFishing)
         {
-            //qt event already happening
-            if (temp != null)
+            yield return new WaitForSeconds(1f);
+            int chance = Random.Range(0, chanceToFish); // independently defined for debugging purposes
+            Debug.Log(chance);
+            if (chance == 1)
             {
-                Debug.Log("Lol but nada.");
+                isFishing = true;
+                StartCoroutine(CatchFish());
             }
-            else
-            {
-                temp = (GameObject)Instantiate(quicktime);
-                var s1 = temp.GetComponent<SequenceGenerator>();
-                s1.ResetSequence(4);
-                Debug.Log("Lol.");
-            }
-
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            // qt is being cancelled midway through
-            if (temp != null)
-            {
-                var s1 = temp.GetComponent<SequenceGenerator>();
-                s1.KillSequence();
-                Destroy(temp);
-            }
-            Debug.Log("Lol but No!");
         }
     }
+
+    IEnumerator CatchFish() // fish appears, player must react and do qt
+    {
+        float timer = 0f;
+        bool fishAccepted = false;
+        fishingIndicator.color = new Color(1f, 1f, 1f, 1f);
+        while (timer < Random.Range(0.5f, 2f) && !fishAccepted)
+        {
+            timer += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                fishAccepted = true;
+                fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+            }
+            yield return null;
+        }
+
+        if (!fishAccepted) // fish got away
+        {
+            Debug.Log("Fish got away!");
+            fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            SequenceGenerator quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
+            yield return new WaitUntil(quickTime.GetSequencePassed);
+            Debug.Log("Fish caught!");
+
+        }
+        isFishing = false;
+        StartCoroutine(FishCheck());
+
+        // GameObject quickTime = Instantiate(quickTimePrefab);
+
+        // Destroy(quickTime);
+        // isFishing = false;
+
+        // Return to fishing check
+        // StartCoroutine(FishCheck());
+    }
+
+
 }

@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     [HideInInspector]
-    public UnityEvent menu;
+    public UnityEvent MenuEvent;
     [HideInInspector]
-    public UnityEvent transit;
+    public UnityEvent TransitEvent;
     [HideInInspector]
-    public UnityEvent stop;
+    public UnityEvent StopEvent;
     [HideInInspector]
-    public UnityEvent fish;
+    public UnityEvent FishEvent;
     [HideInInspector]
-    public UnityEvent lose;
+    public UnityEvent LoseEvent;
     [HideInInspector]
-    public UnityEvent end;
+    public UnityEvent EndEvent;
 
-    enum StateEnum
+    [HideInInspector]
+    public enum StateEnum
     {
         menu,
         transit,
@@ -55,22 +57,22 @@ public class GameManager : MonoBehaviour
             switch (state)
             {
                 case StateEnum.menu:
-                    menu.Invoke();
+                    MenuEvent.Invoke();
                     break;
                 case StateEnum.transit:
-                    transit.Invoke();
+                    TransitEvent.Invoke();
                     break;
                 case StateEnum.stop:
-                    stop.Invoke();
+                    StopEvent.Invoke();
                     break;
                 case StateEnum.fish:
-                    fish.Invoke();
+                    FishEvent.Invoke();
                     break;
                 case StateEnum.lose:
-                    lose.Invoke();
+                    LoseEvent.Invoke();
                     break;
                 case StateEnum.end:
-                    end.Invoke();
+                    EndEvent.Invoke();
                     break;
                 default:
                     Debug.Log("Invalid state found for switch statement in GameManagerBehavior:");
@@ -81,8 +83,13 @@ public class GameManager : MonoBehaviour
         previousState = state;
     }
 
+    public StateEnum GetState()
+    {
+        return state;
+    }
+
     public void FishState()
     {
-        state = StateEnum.menu;
+        state = StateEnum.fish;
     }
 }

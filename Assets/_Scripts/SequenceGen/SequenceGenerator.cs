@@ -9,6 +9,7 @@ public class SequenceGenerator : MonoBehaviour
     private ArrowSquare[] arrowSquares;
     int[] sequence;
     int currentIndex = 0;
+    bool sequencePassed = false;
 
     public void ResetSequence()
     {
@@ -115,10 +116,16 @@ public class SequenceGenerator : MonoBehaviour
 
         return newSequence;
     }
-    
+
     IEnumerator ExitHandler()
     {
         yield return new WaitUntil(arrowSquares[arrowSquares.Length - 1].GetAnimDone);
+        sequencePassed = true;
         Destroy(gameObject);
+    }
+    
+    public bool GetSequencePassed()
+    {
+        return sequencePassed;
     }
 }

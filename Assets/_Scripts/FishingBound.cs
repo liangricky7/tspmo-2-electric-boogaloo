@@ -32,6 +32,7 @@ public class FishingBound : MonoBehaviour
         if (playerInArea && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.FishState();
+            keySprite.color = new Color(1f, 1f, 1f, 0f);
         }
     }
 
