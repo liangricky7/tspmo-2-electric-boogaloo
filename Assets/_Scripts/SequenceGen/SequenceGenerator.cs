@@ -72,7 +72,7 @@ public class SequenceGenerator : MonoBehaviour
         for (int i = 0; i < newSequence.Length; i++)
         {
             newSequence[i] = Random.Range(0, 3);
-            arrowSquares[i] = Instantiate(arrowPrefabs[newSequence[i]], new Vector3((i * 1.2f) - (length * 2f / 5), 0, 0), Quaternion.identity).GetComponent<ArrowSquare>();
+            arrowSquares[i] = Instantiate(arrowPrefabs[newSequence[i]], new Vector3(transform.position.x +  (i * 1.2f) - (length * 2f / 5), transform.position.y, 0), Quaternion.identity).GetComponent<ArrowSquare>();
             arrowSquares[i].transform.SetParent(transform);
         }
         Debug.Log("Generated sequence: " + string.Join(", ", newSequence));
