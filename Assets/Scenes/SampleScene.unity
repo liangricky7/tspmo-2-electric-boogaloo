@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 1512776765}
   - component: {fileID: 1512776764}
   m_Layer: 0
-  m_Name: gaitah holdah
+  m_Name: Gator Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
