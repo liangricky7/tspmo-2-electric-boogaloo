@@ -6,7 +6,7 @@ public class BoatInteraction : MonoBehaviour
 {
     [SerializeField] private Alligator alligator;
 
-    public AudioSource SoundSource;
+    public AudioSource SoundSource; //License for sound used: Motorboat canoe in the river with water flow, splash and flapping, microphone close to the water, loud motor, slowing sometimes and subtle voices sometimes in Amazon rainforest by felix.blume -- https://freesound.org/s/672806/ -- License: Creative Commons 0
     private bool soundMuted = true;
     void Update()
     {

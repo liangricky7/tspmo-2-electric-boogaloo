@@ -18,8 +18,8 @@ public class Fishing : MonoBehaviour
     private PlayerMoveInteract playerAnimCheck;
 
     public AudioSource SoundsSource;
-    public AudioClip CastSound;
-    public AudioClip ReelSound;
+    public AudioClip CastSound; //License for sound: Fly Fishing Reel Running_4.wav by paulprit -- https://freesound.org/s/507095/ -- License: Creative Commons 0
+    public AudioClip ReelSound; //License for sound: Splash Recording 1.m4a by JfishSoM -- https://freesound.org/s/703511/ -- License: Creative Commons 0
 
     void Start()
     {
