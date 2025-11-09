@@ -4,6 +4,8 @@ using UnityEngine;
 public class Alligator : MonoBehaviour
 {
     [SerializeField]
+    GameObject mainCamera;
+    [SerializeField]
     GameObject PlayerReference;
     [SerializeField]
     SpriteRenderer keySprite;
@@ -127,6 +129,7 @@ public class Alligator : MonoBehaviour
                 //animate hit
                 animator.SetBool("BeatGator", true);
                 yield return new WaitUntil(() => playerMove.animationDone);
+                StartCoroutine(mainCamera.GetComponent<ScreenShake>().Shake(.5f, .1f));
                 animator.SetBool("BeatGator", false);
 
                 hitCount--;

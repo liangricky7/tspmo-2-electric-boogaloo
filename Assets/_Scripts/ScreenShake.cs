@@ -23,6 +23,6 @@ public class ScreenShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(Shake(5f, .6f)); 
+        
     }
 }
