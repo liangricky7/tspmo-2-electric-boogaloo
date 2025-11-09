@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class InventoryDisplay : MonoBehaviour
 {
-    // 0 -> Onion, 1 -> Pepper, 2 -> Celery, 3 -> Garlic, 4 -> Chicken
-    // 5 -> Shrimp, 6 -> Catish, 7 -> Crab
+    // 0 -> Onion, 1 -> Pepper, 2 -> Celery, 3 -> Garlic
+    // 4 -> Shrimp, 5 -> Catish, 6 -> Crab
 
     public Sprite checkmarkSprite;
     public Sprite xmarkSprite;
-
-    public bool[] hasIngredients = new bool[8];
-    public SpriteRenderer[] ingredientSRs = new SpriteRenderer[8];
-    public SpriteRenderer[] ingredientChecks = new SpriteRenderer[8];
+    bool openMenu = false;
+    public bool[] hasIngredients = new bool[7];
+    public SpriteRenderer[] ingredientSRs = new SpriteRenderer[7];
+    public SpriteRenderer[] ingredientChecks = new SpriteRenderer[7];
 
     public static InventoryDisplay Instance;
 
@@ -35,9 +35,8 @@ public class InventoryDisplay : MonoBehaviour
         for (int i = 0; i < ingredientSRs.Length; i++)
         {
             ingredientSRs[i] = transform.GetChild(1).GetChild(i).GetComponent<SpriteRenderer>();
-            Debug.Log(transform.GetChild(1).GetChild(i).name);
-            Debug.Log(ingredientSRs[i]);
-
+            // Debug.Log(transform.GetChild(1).GetChild(i).name);
+            // Debug.Log(ingredientSRs[i]);
         }
         for (int i = 0; i < ingredientChecks.Length; i++)
         {
@@ -54,7 +53,7 @@ public class InventoryDisplay : MonoBehaviour
             case "onion":
                 index = 0;
                 break;
-            case "pepper":
+            case "bell pepper":
                 index = 1;
                 break;
             case "celery":
@@ -63,17 +62,14 @@ public class InventoryDisplay : MonoBehaviour
             case "garlic":
                 index = 3;
                 break;
-            case "chicken":
+            case "shrimp":
                 index = 4;
                 break;
-            case "shrimp":
+            case "catfish":
                 index = 5;
                 break;
-            case "catfish":
-                index = 6;
-                break;
             case "crab":
-                index = 7;
+                index = 6;
                 break;
             default:
                 Debug.LogWarning("Unknown ingredient: " + ingredientName);
@@ -89,47 +85,19 @@ public class InventoryDisplay : MonoBehaviour
         // ingredientChecks[index].color = checkColor;
     }
 
-    /*public void CheckOff()
+    void Update()
     {
-        if (hasOnion)
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            onionSR.m_Color = color.white;
-            onionCheck.m_Color.a = 0;
+            openMenu = !openMenu;
+            if (openMenu)
+            {
+                transform.position -= new Vector3(4.18f, 0f, 0f);
+            }
+            else
+            {
+                transform.position += new Vector3(4.18f, 0f, 0f);
+            }
         }
-        if (hasPepper)
-        {
-            pepperSR.m_Color = color.white;
-            pepperCheck.m_Color.a = 0;
-        }
-        if (hasCelery)
-        {
-            celerySR.m_Color = color.white;
-            celeryCheck.m_Color.a = 0;
-        }
-        if (hasGarlic)
-        {
-            garlicSR.m_Color = color.white;
-            garlicCheck.m_Color.a = 0;
-        }
-        if (hasChicken)
-        {
-            chickenSR.m_Color = color.white;
-            chickenCheck.m_Color.a = 0;
-        }
-        if (hasShrimp)
-        {
-            shrimpSR.m_Color = color.white;
-            shrimpCheck.m_Color.a = 0;
-        }
-        if (hasFish) 
-        {
-            fishSR.m_Color = color.white;
-            fishCheck.m_Color.a = 0;
-        }
-        if (hasCrab)
-        {
-            crabSR.m_Color = color.white;
-            crabCheck.m_Color.a = 0;
-        }
-    }*/
+    }
 }

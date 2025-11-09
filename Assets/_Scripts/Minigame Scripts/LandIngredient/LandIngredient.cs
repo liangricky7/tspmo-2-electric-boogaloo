@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LandIngredient : MonoBehaviour
 {
-    string ingredientName = "Land Ingredient";
+    public string ingredientName = "Land Ingredient";
     [SerializeField]
     SpriteRenderer ingredientSpriteRenderer;
 
