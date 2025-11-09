@@ -11,6 +11,10 @@ public class SequenceGenerator : MonoBehaviour
     int currentIndex = 0;
     bool sequencePassed = false;
 
+    public AudioSource SoundSource;
+    public AudioClip KeypressSound;
+    [SerializeField] private float soundVolume = 1f;
+
     public void ResetSequence()
     {
         sequence = GenerateSequence();
@@ -21,6 +25,7 @@ public class SequenceGenerator : MonoBehaviour
     void Start()
     {
         sequence = GenerateSequence();
+        SoundSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +41,7 @@ public class SequenceGenerator : MonoBehaviour
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
+                SoundSource.PlayOneShot(KeypressSound, soundVolume);
             }
             else if (Input.anyKeyDown)
             {
@@ -53,6 +59,7 @@ public class SequenceGenerator : MonoBehaviour
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
+                SoundSource.PlayOneShot(KeypressSound, soundVolume);
             }
             else if (Input.anyKeyDown)
             {
@@ -70,6 +77,7 @@ public class SequenceGenerator : MonoBehaviour
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
+                SoundSource.PlayOneShot(KeypressSound, soundVolume);
             }
             else if (Input.anyKeyDown)
             {
@@ -87,6 +95,7 @@ public class SequenceGenerator : MonoBehaviour
             {
                 arrowSquares[currentIndex].TurnOff();
                 currentIndex++;
+                SoundSource.PlayOneShot(KeypressSound, soundVolume);
             }
             else if (Input.anyKeyDown)
             {
