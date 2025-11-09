@@ -16,9 +16,33 @@ public class LandSpawner : MonoBehaviour
     
     private int chanceToSpawn = 4; // 1 in X chance each second
 
-    void Start()
+    void OnEnable()
     {
+
+        // Turn On
+        GameManager.Instance.TransitEvent.AddListener(StartSpawn);
+        // Turn Off
+        GameManager.Instance.ExitTransitEvent.AddListener(ExitSpawn);
+    }
+
+    void OnDisable()
+    {
+        // Turn On
+        GameManager.Instance.TransitEvent.RemoveListener(StartSpawn);
+        // Turn Off
+        GameManager.Instance.ExitTransitEvent.RemoveListener(ExitSpawn);
+    }
+
+    void StartSpawn()
+    {
+        Debug.Log("start spawn");
         StartCoroutine(SpawnLandIngredient());
+    }
+
+    void ExitSpawn()
+    {
+        Debug.Log("end spawn");
+        StopAllCoroutines();
     }
 
     IEnumerator SpawnLandIngredient()

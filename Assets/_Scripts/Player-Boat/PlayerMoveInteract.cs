@@ -63,7 +63,7 @@ public class PlayerMoveInteract : MonoBehaviour
     void ChangeArm()
     {
         fishingArmOut = !fishingArmOut;
-        if (!fishingArmOut)
+        if (fishingArmOut)
         {
             // Change to fishing arm
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);

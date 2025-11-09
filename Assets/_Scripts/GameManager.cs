@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,17 +15,19 @@ public class GameManager : MonoBehaviour
     public UnityEvent LoseEvent;
     [HideInInspector]
     public UnityEvent EndEvent;
-
     [HideInInspector]
     public UnityEvent ExitFishEvent;
-
+    [HideInInspector]
+    public UnityEvent ExitStopEvent;
+    [HideInInspector]
+    public UnityEvent ExitTransitEvent;
 
     [HideInInspector]
     public enum StateEnum
     {
-        menu,
-        transit,
+        // placeholder, // to avoid defaulting to stop
         stop,
+        transit,
         fish,
         lose,
         end,
@@ -36,20 +35,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StateEnum state;
     private StateEnum previousState;
 
-    public GameObject gatorObject;
-
     public static GameManager Instance;
 
     void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            // Destroy duplicate instances
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            Instance = this; // Assign the current instance
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -58,30 +56,23 @@ public class GameManager : MonoBehaviour
     {
         if (state != previousState)
         {
+            CleanUpStates();
+
             switch (state)
             {
-                case StateEnum.menu:
-                    CleanUpStates();
-                    MenuEvent.Invoke();
-                    break;
                 case StateEnum.transit:
-                    CleanUpStates();
                     TransitEvent.Invoke();
                     break;
                 case StateEnum.stop:
-                    CleanUpStates();
                     StopEvent.Invoke();
                     break;
                 case StateEnum.fish:
-                    CleanUpStates();
                     FishEvent.Invoke();
                     break;
                 case StateEnum.lose:
-                    CleanUpStates();
                     LoseEvent.Invoke();
                     break;
                 case StateEnum.end:
-                    CleanUpStates();
                     EndEvent.Invoke();
                     break;
                 default:
@@ -95,19 +86,26 @@ public class GameManager : MonoBehaviour
 
     void CleanUpStates()
     {
-        if (previousState == 0) return;
-         switch (previousState)
+        // Debug.Log("previous " + previousState);
+        switch (previousState)
             {
                 case StateEnum.fish:
                     ExitFishEvent.Invoke();
                     break;
+                case StateEnum.stop:
+                    // Debug.Log("exiting stop state");
+                    ExitStopEvent.Invoke();
+                    break;    
+                case StateEnum.transit:
+                    // Debug.Log("exiting stop state");
+                    ExitTransitEvent.Invoke();
+                    break; 
                 default:
                     // Debug.Log("Invalid state found for switch statement in GameManagerBehavior:");
                     // Debug.Log(state);
                     break;
             }
     }
-
 
     public StateEnum GetState()
     {
@@ -117,6 +115,11 @@ public class GameManager : MonoBehaviour
     public void StopState()
     {
         state = StateEnum.stop;
+    }
+
+    public void TransitState()
+    {
+        state = StateEnum.transit;
     }
 
     public void FishState()

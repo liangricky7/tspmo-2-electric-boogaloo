@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Alligator : MonoBehaviour
@@ -11,7 +9,7 @@ public class Alligator : MonoBehaviour
     bool playerInTrigger = false; // player is in trigger zone, but gator is not necessarily attacking
     bool playerInArea = false; // player is in trigger zone and gator is attacking
     bool playerIsAttacking = false;
-    bool isAttacking = false;
+    public bool isAttacking = false; // gator is attacking
     private int chanceToAttack = 3; // 1 in X chance each second
 
     void Start()
@@ -19,28 +17,42 @@ public class Alligator : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.2f);  
         keySprite.color = new Color(1f, 1f, 1f, 0.0f);    
-        StartCoroutine(GatorCheck());
     }
     void OnEnable()
     {
-        // Subscribe when enabled
+        // Turn On
         GameManager.Instance.StopEvent.AddListener(StartGator);
+        // Turn Off
+        GameManager.Instance.ExitStopEvent.AddListener(StopGator);
     }
 
     void OnDisable()
     {
         // IMPORTANT: Unsubscribe to prevent memory leaks
         GameManager.Instance.StopEvent.RemoveListener(StartGator);
+        // Turn Off
+        GameManager.Instance.ExitStopEvent.RemoveListener(StopGator);
     }
 
     void StartGator()
     {
+        // Debug.Log("start gator");
         StartCoroutine(GatorCheck());
+    }
+
+    void StopGator()
+    {
+        // Debug.Log("stop gator");
+        StopAllCoroutines();
+        playerInTrigger = false; 
+        playerInArea = false;
+        playerIsAttacking = false;
+        isAttacking = false; 
     }
 
     IEnumerator GatorCheck()
     {
-        Debug.Log("enter check");
+        // Debug.Log("enter check");
         while (!isAttacking)
         {
             yield return new WaitForSeconds(1f);

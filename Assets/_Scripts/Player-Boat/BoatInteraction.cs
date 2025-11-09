@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class BoatInteraction : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Alligator alligator;
 
-    // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance == null) Debug.Log("GameManager instance is null");
+        if (Input.GetKeyDown(KeyCode.W)) Debug.Log(GameManager.Instance.GetState());
+        if (GameManager.Instance.GetState() == GameManager.StateEnum.stop && Input.GetKeyDown(KeyCode.W)) // start boat
+        {
+            if (alligator.isAttacking)
+            {
+                Debug.Log("Gator on boat! Can't start!");
+                return; // maybe indicate you need to get the gator off of the boat
+            }
+            // Debug.Log("Starting Transit");
+            GameManager.Instance.TransitState();
+        }
+        else if (GameManager.Instance.GetState() == GameManager.StateEnum.transit && Input.GetKeyDown(KeyCode.S)) // stop boat
+        {
+            GameManager.Instance.StopState();
+        }
         
     }
 }
