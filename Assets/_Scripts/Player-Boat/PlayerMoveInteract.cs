@@ -69,6 +69,7 @@ public class PlayerMoveInteract : MonoBehaviour
 
     public void TurnAnimationOff()
     {
+        Debug.Log("Animation Done!");
         animationDone = true;
     }
 

@@ -112,6 +112,7 @@ public class Fishing : MonoBehaviour
             Debug.Log("Fish caught!");
 
         }
+        yield return new WaitForSeconds(0.5f);
         isFishing = false;
         StartCoroutine(FishCheck());
     }
