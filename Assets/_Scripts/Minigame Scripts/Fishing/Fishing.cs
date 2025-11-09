@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Fishing : MonoBehaviour
 {
-    public GameObject quickTimePrefab; //game object
+    [SerializeField]
+    private GameObject quickTimePrefab; //game object
     [SerializeField]
     private SpriteRenderer fishingIndicator;
     [SerializeField]
@@ -12,9 +13,16 @@ public class Fishing : MonoBehaviour
     private bool isFishing = false; // activated when we spawn quicktime event
     private int chanceToFish = 5; // 1 in X chance each second
 
+    private GameObject playerReference; // reference to player
+    private Animator playerAnimator;
+    private PlayerMoveInteract playerAnimCheck;
+
     void Start()
     {
         fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+        playerReference = PlayerManager.Instance.playerReference;
+        playerAnimator = playerReference.GetComponent<Animator>();
+        playerAnimCheck = playerReference.GetComponent<PlayerMoveInteract>();
     }
 
     void OnEnable()
@@ -35,27 +43,34 @@ public class Fishing : MonoBehaviour
         StartCoroutine(FishCheck());
     }
 
+    void StopFishing()
+    {
+        playerAnimator.SetInteger("FishingPhase", 0); // reset animation
+        StopAllCoroutines();
+        isFishing = false;
+        fishingActive = false;
+        GameManager.Instance.StopState();
+        fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+    }
+
     // exit fishing
     void Update()
     {
         if (fishingActive && Input.GetKeyDown(KeyCode.Q))
         {
-            StopAllCoroutines();
-            isFishing = false;
-            fishingActive = false;
-            GameManager.Instance.StopState();
-            fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+            StopFishing();
         }
     }
 
     IEnumerator FishCheck() // waiting for fish
     {
-        
-
-        Debug.Log("enter fish check");
+        // Debug.Log("enter fish check");
+        playerAnimator.SetInteger("FishingPhase", 1); // cast line
         while (!isFishing)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(() => playerAnimCheck.animationDone == true);
+            yield return new WaitForSeconds(1.2f);
+            playerAnimator.SetInteger("FishingPhase", 2); // maintain cast line
             int chance = Random.Range(0, chanceToFish); // independently defined for debugging purposes
             // Debug.Log(chance);
             if (chance == 1)
@@ -89,21 +104,16 @@ public class Fishing : MonoBehaviour
         }
         else
         {
+            playerAnimator.SetInteger("FishingPhase", 3); // fight for fish
             SequenceGenerator quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
             yield return new WaitUntil(quickTime.GetSequencePassed);
+            playerAnimator.SetInteger("FishingPhase", 4); // successful catch
+            yield return new WaitUntil(() => playerAnimCheck.animationDone == true);
             Debug.Log("Fish caught!");
 
         }
         isFishing = false;
         StartCoroutine(FishCheck());
-
-        // GameObject quickTime = Instantiate(quickTimePrefab);
-
-        // Destroy(quickTime);
-        // isFishing = false;
-
-        // Return to fishing check
-        // StartCoroutine(FishCheck());
     }
 
 
