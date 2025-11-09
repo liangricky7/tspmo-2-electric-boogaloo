@@ -17,12 +17,18 @@ public class Fishing : MonoBehaviour
     private Animator playerAnimator;
     private PlayerMoveInteract playerAnimCheck;
 
+    public AudioSource SoundsSource;
+    public AudioClip CastSound;
+    public AudioClip ReelSound;
+
     void Start()
     {
         fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
         playerReference = PlayerManager.Instance.playerReference;
         playerAnimator = playerReference.GetComponent<Animator>();
         playerAnimCheck = playerReference.GetComponent<PlayerMoveInteract>();
+        SoundsSource = GetComponent<AudioSource>();
+
     }
 
     void OnEnable()
@@ -41,6 +47,7 @@ public class Fishing : MonoBehaviour
     {
         fishingActive = true;
         StartCoroutine(FishCheck());
+        StartCoroutine(PlayCastSound(0.7f));
     }
 
     void StopFishing()
@@ -107,15 +114,26 @@ public class Fishing : MonoBehaviour
             playerAnimator.SetInteger("FishingPhase", 3); // fight for fish
             SequenceGenerator quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
             yield return new WaitUntil(quickTime.GetSequencePassed);
+            StartCoroutine(PlayReelSound());
             playerAnimator.SetInteger("FishingPhase", 4); // successful catch
             yield return new WaitUntil(() => playerAnimCheck.animationDone == true);
             Debug.Log("Fish caught!");
-
+            StartCoroutine(PlayCastSound(1.4f));
         }
         yield return new WaitForSeconds(0.5f);
         isFishing = false;
         StartCoroutine(FishCheck());
     }
 
+    IEnumerator PlayCastSound(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        SoundsSource.PlayOneShot(CastSound);
+    }
 
+    IEnumerator PlayReelSound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SoundsSource.PlayOneShot(ReelSound);
+    }
 }
