@@ -11,9 +11,13 @@ public class PlayerMoveInteract : MonoBehaviour
 
     public bool animationDone = true; // boolean to signal that there is an animation playing; used by fishing and gator
 
+    public AudioSource SoundSource;
+    public AudioClip HitSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        SoundSource = GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -109,5 +113,10 @@ public class PlayerMoveInteract : MonoBehaviour
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             this.gameObject.transform.GetChild(2).gameObject.SetActive(false);
         }
+    }
+
+    public void PlayHitSound()
+    {
+        SoundSource.PlayOneShot(HitSound, 0.3f);
     }
 }

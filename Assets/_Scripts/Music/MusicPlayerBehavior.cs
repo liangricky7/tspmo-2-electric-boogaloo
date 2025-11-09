@@ -26,7 +26,7 @@ public class MusicPlayerBehavior : MonoBehaviour
 
     IEnumerator StartLoop()
     {
-        yield return new WaitForSeconds(14.022f);
+        yield return new WaitForSeconds(14.122f);
         MusicSource.PlayOneShot(LoopedMusic);
         callLoop = true;
     }
