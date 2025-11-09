@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class ScrollManager : MonoBehaviour
 {
-    bool spaceChecker = false;
+    public bool spaceChecker = true;
 
-    void Start()
+    public GameObject[] bgprefab;
+    public GameObject[] fgprefab;
+    public List<GameObject> panelList;
+
+    public bool readyForeground = false;
+
+    void Awake()
     {
 
-
+        panelList = new List<GameObject>();
+        GameObject panel = GameObject.FindWithTag("ForegroundTile");
+        panelList.Add(panel);
+        panel = GameObject.FindWithTag("BackgroundTile");
+        panelList.Add(panel);
+        
+        /*panel = GameObject.Instantiate(bgprefab[Randomizer()], new Vector3(panel.transform.position.x + 17.2f, 0, 0), Quaternion.identity, this.transform);
+        panelList.Add(panel);*/
 
     }
 
@@ -17,27 +30,23 @@ public class ScrollManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        {
-            spaceChecker = true;
-            tagger(spaceChecker);
-        }
-        else if (spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        {
-            spaceChecker = false;
-            tagger(spaceChecker);
-        }
+        tagger(spaceChecker);
     }
 
     void tagger(bool state)
     {
 
-        GameObject[] panels = GameObject.FindGameObjectsWithTag("BackgroundTile");
-
-        foreach (GameObject panel in panels)
+        foreach (GameObject panel in panelList)
         {
             MoveBackground mover = panel.GetComponent<MoveBackground>();
             mover.startMove = state;
         }
+    }
+
+    public int Randomizer(int max)
+    {
+
+        return Random.Range(0, max);
+
     }
 }
