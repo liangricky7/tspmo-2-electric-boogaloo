@@ -11,8 +11,21 @@ public class ScrollManager : MonoBehaviour
 
     public bool readyForeground = false;
 
+    public static ScrollManager Instance;
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            // Destroy duplicate instances
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this; // Assign the current instance
+            DontDestroyOnLoad(gameObject);
+        }
+        
         panelList = new List<GameObject>();
         GameObject panel = GameObject.FindWithTag("ForegroundTile");
         panelList.Add(panel);

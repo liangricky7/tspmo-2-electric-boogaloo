@@ -13,6 +13,7 @@ public class BoatInteraction : MonoBehaviour
         SoundSource.mute = soundMuted;
         if (GameManager.Instance.GetState() == GameManager.StateEnum.stop && Input.GetKeyDown(KeyCode.W)) // start boat
         {
+            GameManager.Instance.EndState();
             soundMuted = false;
             if (alligator.isAttacking)
             {
