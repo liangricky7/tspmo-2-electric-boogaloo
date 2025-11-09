@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public UnityEvent EndEvent;
 
     [HideInInspector]
+    public UnityEvent ExitFishEvent;
+
+
+    [HideInInspector]
     public enum StateEnum
     {
         menu,
@@ -57,21 +61,27 @@ public class GameManager : MonoBehaviour
             switch (state)
             {
                 case StateEnum.menu:
+                    CleanUpStates();
                     MenuEvent.Invoke();
                     break;
                 case StateEnum.transit:
+                    CleanUpStates();
                     TransitEvent.Invoke();
                     break;
                 case StateEnum.stop:
+                    CleanUpStates();
                     StopEvent.Invoke();
                     break;
                 case StateEnum.fish:
+                    CleanUpStates();
                     FishEvent.Invoke();
                     break;
                 case StateEnum.lose:
+                    CleanUpStates();
                     LoseEvent.Invoke();
                     break;
                 case StateEnum.end:
+                    CleanUpStates();
                     EndEvent.Invoke();
                     break;
                 default:
@@ -83,9 +93,30 @@ public class GameManager : MonoBehaviour
         previousState = state;
     }
 
+    void CleanUpStates()
+    {
+        if (previousState == 0) return;
+         switch (previousState)
+            {
+                case StateEnum.fish:
+                    ExitFishEvent.Invoke();
+                    break;
+                default:
+                    // Debug.Log("Invalid state found for switch statement in GameManagerBehavior:");
+                    // Debug.Log(state);
+                    break;
+            }
+    }
+
+
     public StateEnum GetState()
     {
         return state;
+    }
+
+    public void StopState()
+    {
+        state = StateEnum.stop;
     }
 
     public void FishState()

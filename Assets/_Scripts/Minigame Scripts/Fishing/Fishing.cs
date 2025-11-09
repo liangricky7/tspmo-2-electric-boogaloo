@@ -8,7 +8,8 @@ public class Fishing : MonoBehaviour
     private SpriteRenderer fishingIndicator;
     [SerializeField]
     private Transform fishingSpot;
-    private bool isFishing = false;
+    private bool fishingActive = false; // is in fishing state, not necessarily in fishing minigame
+    private bool isFishing = false; // activated when we spawn quicktime event
     private int chanceToFish = 5; // 1 in X chance each second
 
     void Start()
@@ -30,7 +31,21 @@ public class Fishing : MonoBehaviour
 
     void StartFishing()
     {
+        fishingActive = true;
         StartCoroutine(FishCheck());
+    }
+
+    // exit fishing
+    void Update()
+    {
+        if (fishingActive && Input.GetKeyDown(KeyCode.Q))
+        {
+            StopAllCoroutines();
+            isFishing = false;
+            fishingActive = false;
+            GameManager.Instance.StopState();
+            fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+        }
     }
 
     IEnumerator FishCheck() // waiting for fish
@@ -40,7 +55,7 @@ public class Fishing : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             int chance = Random.Range(0, chanceToFish); // independently defined for debugging purposes
-            Debug.Log(chance);
+            // Debug.Log(chance);
             if (chance == 1)
             {
                 isFishing = true;
