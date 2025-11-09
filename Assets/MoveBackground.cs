@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveBackground : MonoBehaviour
 {
 
-    public bool startMove = false;
+    public bool startMove = true;
 
     // Update is called once per frame
     void Update()
@@ -24,20 +24,10 @@ public class MoveBackground : MonoBehaviour
         if (startMove)
         {
 
-            transform.position += new Vector3(-0.05f, 0, 0);
+            transform.position += new Vector3(-5f, 0, 0) * Time.deltaTime;
 
         }
 
     }
 
-    void tagger(bool state)
-    {
-
-        GameObject[] panels = GameObject.FindGameObjectsWithTag("BackgroundTile");
-
-        foreach (GameObject panel in panels)
-        {
-
-        }
-    }
 }
