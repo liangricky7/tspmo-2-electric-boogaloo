@@ -9,6 +9,12 @@ public class Fishing : MonoBehaviour
     private SpriteRenderer fishingIndicator;
     [SerializeField]
     private Transform fishingSpot;
+    // fish data
+    [SerializeField]
+    private Sprite[] fishSprites;
+    [SerializeField]
+    private string[] fishNames;
+    // fishing states
     private bool fishingActive = false; // is in fishing state, not necessarily in fishing minigame
     private bool isFishing = false; // activated when we spawn quicktime event
     private int chanceToFish = 5; // 1 in X chance each second
@@ -104,11 +110,23 @@ public class Fishing : MonoBehaviour
         }
         else
         {
+            // start quicktime event
             playerAnimator.SetInteger("FishingPhase", 3); // fight for fish
             SequenceGenerator quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
             yield return new WaitUntil(quickTime.GetSequencePassed);
+
+            // get random fish
+            int fishIndex = Random.Range(0, fishSprites.Length);
+            InventoryDisplay.Instance.CheckOff(fishNames[fishIndex]);
+            Sprite bobber = playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite;// hard coded reference to the line hook
+            playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = fishSprites[fishIndex];
+            Debug.Log(playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite);
+
+            // play success animation
             playerAnimator.SetInteger("FishingPhase", 4); // successful catch
             yield return new WaitUntil(() => playerAnimCheck.animationDone == true);
+            playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = bobber;
+
             Debug.Log("Fish caught!");
 
         }

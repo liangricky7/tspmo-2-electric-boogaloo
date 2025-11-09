@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryDisplay : MonoBehaviour
 {
     // 0 -> Onion, 1 -> Pepper, 2 -> Celery, 3 -> Garlic, 4 -> Chicken
-    // 5 -> Shrimp, 6 -> Fish, 7 -> Crab
+    // 5 -> Shrimp, 6 -> Catish, 7 -> Crab
 
     public Sprite checkmarkSprite;
     public Sprite xmarkSprite;
@@ -13,6 +13,22 @@ public class InventoryDisplay : MonoBehaviour
     public bool[] hasIngredients = new bool[8];
     public SpriteRenderer[] ingredientSRs = new SpriteRenderer[8];
     public SpriteRenderer[] ingredientChecks = new SpriteRenderer[8];
+
+    public static InventoryDisplay Instance;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            // Destroy duplicate instances
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this; // Assign the current instance
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -53,7 +69,7 @@ public class InventoryDisplay : MonoBehaviour
             case "shrimp":
                 index = 5;
                 break;
-            case "fish":
+            case "catfish":
                 index = 6;
                 break;
             case "crab":
@@ -67,7 +83,7 @@ public class InventoryDisplay : MonoBehaviour
         if (index < 0 || index >= hasIngredients.Length) return;
 
         hasIngredients[index] = true;
-        ingredientSRs[index].sprite = checkmarkSprite;
+        ingredientChecks[index].sprite = checkmarkSprite;
         // Color checkColor = ingredientChecks[index].color;
         // checkColor.a = 1f; // Make the checkmark fully visible
         // ingredientChecks[index].color = checkColor;
