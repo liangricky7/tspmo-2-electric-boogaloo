@@ -1,19 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Alligator : MonoBehaviour
 {
-
-
+    [SerializeField]
+    SpriteRenderer keySprite;
     SpriteRenderer spriteRenderer;
+    bool playerInTrigger = false; // player is in trigger zone, but gator is not necessarily attacking
+    bool playerInArea = false; // player is in trigger zone and gator is attacking
+    bool playerIsAttacking = false;
     bool isAttacking = false;
-    private int chanceToAttack = 40; // 1 in X chance each second
+    private int chanceToAttack = 3; // 1 in X chance each second
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(1f, 1f, 1f, 0.2f);   
+        spriteRenderer.color = new Color(1f, 1f, 1f, 0.2f);  
+        keySprite.color = new Color(1f, 1f, 1f, 0.0f);    
+        StartCoroutine(GatorCheck());
+    }
+    void OnEnable()
+    {
+        // Subscribe when enabled
+        GameManager.Instance.StopEvent.AddListener(StartGator);
+    }
+
+    void OnDisable()
+    {
+        // IMPORTANT: Unsubscribe to prevent memory leaks
+        GameManager.Instance.StopEvent.RemoveListener(StartGator);
+    }
+
+    void StartGator()
+    {
         StartCoroutine(GatorCheck());
     }
 
@@ -24,10 +45,10 @@ public class Alligator : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             int chance = Random.Range(0, chanceToAttack); // independently defined for debugging purposes
-            Debug.Log(chance);
+            // Debug.Log(chance);
             if (chance == 1)
             {
-                Debug.Log("enter attack");
+                // Debug.Log("enter attack");
                 isAttacking = true;
                 AttackBoat();
             }
@@ -36,9 +57,46 @@ public class Alligator : MonoBehaviour
 
     void AttackBoat()
     {
-        Debug.Log("Gator Attacking!");
+        // Debug.Log("Gator Attacking!");
         spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-        StartCoroutine(HitGator());
+    }
+
+    // code for button to show to enter hit mode
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            playerInTrigger = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (isAttacking && collision.gameObject.CompareTag("Player"))
+        {
+            playerInTrigger = false;
+            if (isAttacking)
+            {
+                playerInArea = false;
+                keySprite.color = new Color(1f, 1f, 1f, 0f);    
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (playerInTrigger && isAttacking && !playerIsAttacking) // reveals key prompt when gator is attacking and player in area; doing this by trigger doesnt work
+        {
+            playerInArea = true;
+            keySprite.color = new Color(1f, 1f, 1f, 1f);
+        }
+
+        if (!playerIsAttacking && playerInArea && Input.GetKeyDown(KeyCode.E))
+        {
+            playerIsAttacking = true;
+            keySprite.color = new Color(1f, 1f, 1f, 0f);
+            StartCoroutine(HitGator());
+        }
     }
 
     IEnumerator HitGator()
