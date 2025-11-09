@@ -99,5 +99,21 @@ public class InventoryDisplay : MonoBehaviour
                 transform.position += new Vector3(4.18f, 0f, 0f);
             }
         }
+
+        if (CheckWin())
+        {
+            GameManager.Instance.EndState();
+        }
+    }
+    
+    bool CheckWin()
+    {
+        foreach (bool b in hasIngredients)
+        {
+            if (!b)
+                return false;
+        }
+        return true;
+        
     }
 }

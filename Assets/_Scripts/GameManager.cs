@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
         stop,
         transit,
         fish,
-        lose,
         end,
     }
     [SerializeField] private StateEnum state;
@@ -68,9 +67,6 @@ public class GameManager : MonoBehaviour
                     break;
                 case StateEnum.fish:
                     FishEvent.Invoke();
-                    break;
-                case StateEnum.lose:
-                    LoseEvent.Invoke();
                     break;
                 case StateEnum.end:
                     EndEvent.Invoke();
@@ -125,5 +121,9 @@ public class GameManager : MonoBehaviour
     public void FishState()
     {
         state = StateEnum.fish;
+    }
+    public void EndState()
+    {
+        state = StateEnum.end;
     }
 }
