@@ -3,7 +3,28 @@ using UnityEngine;
 
 public class ScreenShake : MonoBehaviour
 {
-    public IEnumerator Shake(float length, float percent)
+    public static ScreenShake Instance;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            // Destroy duplicate instances
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this; // Assign the current instance
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    public void Shake(float length, float percent)
+    {
+        StartCoroutine(ShakeCoroutine(length, percent));
+    }
+
+    public IEnumerator ShakeCoroutine(float length, float percent)
     {
         Vector3 startPosition = transform.position;
         float elapsed = 0f;
@@ -18,11 +39,5 @@ public class ScreenShake : MonoBehaviour
             yield return null;
         }
         transform.position = startPosition;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -133,7 +133,8 @@ public class Alligator : MonoBehaviour
                 //animate hit
                 animator.SetBool("BeatGator", true);
                 yield return new WaitUntil(() => playerMove.animationDone);
-                StartCoroutine(mainCamera.GetComponent<ScreenShake>().Shake(.5f, .1f));
+                yield return new WaitForSeconds(0.175f);
+                ScreenShake.Instance.Shake(0.1f, 0.2f);
                 animator.SetBool("BeatGator", false);
 
                 hitCount--;
