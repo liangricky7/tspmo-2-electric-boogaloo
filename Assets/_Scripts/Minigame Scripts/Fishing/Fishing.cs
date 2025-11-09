@@ -23,12 +23,17 @@ public class Fishing : MonoBehaviour
     private Animator playerAnimator;
     private PlayerMoveInteract playerAnimCheck;
 
+    public AudioSource SoundsSource;
+    public AudioClip CastSound; //License for sound: Fly Fishing Reel Running_4.wav by paulprit -- https://freesound.org/s/507095/ -- License: Creative Commons 0
+    public AudioClip ReelSound; //License for sound: Splash Recording 1.m4a by JfishSoM -- https://freesound.org/s/703511/ -- License: Creative Commons 0
+
     void Start()
     {
         fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
         playerReference = PlayerManager.Instance.playerReference;
         playerAnimator = playerReference.GetComponent<Animator>();
         playerAnimCheck = playerReference.GetComponent<PlayerMoveInteract>();
+        SoundsSource = GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -47,6 +52,7 @@ public class Fishing : MonoBehaviour
     {
         fishingActive = true;
         StartCoroutine(FishCheck());
+        StartCoroutine(PlayCastSound(0.7f));
     }
 
     void StopFishing()
@@ -123,10 +129,12 @@ public class Fishing : MonoBehaviour
             Debug.Log(playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite);
 
             // play success animation
+            StartCoroutine(PlayReelSound());
             playerAnimator.SetInteger("FishingPhase", 4); // successful catch
             yield return new WaitUntil(() => playerAnimCheck.animationDone == true);
             playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = bobber;
 
+            StartCoroutine(PlayCastSound(1.4f));
             Debug.Log("Fish caught!");
 
         }
@@ -135,5 +143,15 @@ public class Fishing : MonoBehaviour
         StartCoroutine(FishCheck());
     }
 
+    IEnumerator PlayCastSound(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        SoundsSource.PlayOneShot(CastSound);
+    }
 
+    IEnumerator PlayReelSound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SoundsSource.PlayOneShot(ReelSound);
+    }
 }
