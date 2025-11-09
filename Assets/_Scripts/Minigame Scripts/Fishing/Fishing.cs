@@ -111,7 +111,7 @@ public class Fishing : MonoBehaviour
 
         if (!fishAccepted) // fish got away
         {
-            Debug.Log("Fish got away!");
+            // Debug.Log("Fish got away!");
             fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
         }
         else
@@ -126,7 +126,6 @@ public class Fishing : MonoBehaviour
             InventoryDisplay.Instance.CheckOff(fishNames[fishIndex]);
             Sprite bobber = playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite;// hard coded reference to the line hook
             playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = fishSprites[fishIndex];
-            Debug.Log(playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite);
 
             // play success animation
             StartCoroutine(PlayReelSound());
@@ -135,7 +134,7 @@ public class Fishing : MonoBehaviour
             playerReference.transform.GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = bobber;
 
             StartCoroutine(PlayCastSound(1.4f));
-            Debug.Log("Fish caught!");
+            // Debug.Log("Fish caught!");
 
         }
         yield return new WaitForSeconds(0.5f);

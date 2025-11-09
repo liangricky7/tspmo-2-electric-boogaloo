@@ -35,13 +35,13 @@ public class LandSpawner : MonoBehaviour
 
     void StartSpawn()
     {
-        Debug.Log("start spawn");
+        // Debug.Log("start spawn");
         StartCoroutine(SpawnLandIngredient());
     }
 
     void ExitSpawn()
     {
-        Debug.Log("end spawn");
+        // Debug.Log("end spawn");
         StopAllCoroutines();
     }
 
