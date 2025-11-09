@@ -6,6 +6,7 @@ public class FishingBound : MonoBehaviour
 {
     private BoxCollider2D fishingArea;
     [SerializeField] private SpriteRenderer keySprite;
+    [SerializeField] private SpriteRenderer rodSprite;
     private bool playerInArea;
 
     void Start()
@@ -32,6 +33,7 @@ public class FishingBound : MonoBehaviour
         if (playerInArea && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.FishState();
+            rodSprite.color = new Color(1f, 1f, 1f, 0f);
             keySprite.color = new Color(1f, 1f, 1f, 0f);
         }
     }
