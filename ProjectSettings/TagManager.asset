@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BackgroundTile
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,21 @@ TagManager:
     locked: 0
   - name: Quicktime
     uniqueID: 696219095
+  - name: sunset
+    uniqueID: 4161600503
+    locked: 0
+  - name: background
+    uniqueID: 1633792129
+    locked: 0
+  - name: player
+    uniqueID: 2280307131
+    locked: 0
+  - name: boat
+    uniqueID: 2629766763
+    locked: 0
+  - name: arm
+    uniqueID: 359906559
+    locked: 0
+  - name: foreground
+    uniqueID: 2498023481
     locked: 0
