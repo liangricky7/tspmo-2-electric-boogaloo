@@ -4,38 +4,74 @@ using UnityEngine;
 
 public class InventoryDisplay : MonoBehaviour
 {
-    public bool hasOnion = false;
-    public bool hasPepper = false;
-    public bool hasCelery = false;
-    public bool hasGarlic = false;
-    public bool hasChicken = false;
-    public bool hasShrimp = false;
-    public bool hasFish = false;
-    public bool hasCrab = false;
+    // 0 -> Onion, 1 -> Pepper, 2 -> Celery, 3 -> Garlic, 4 -> Chicken
+    // 5 -> Shrimp, 6 -> Fish, 7 -> Crab
 
-    public SpriteRenderer onionSR;
-    public SpriteRenderer onionCheck;
+    public Sprite checkmarkSprite;
+    public Sprite xmarkSprite;
 
-    public SpriteRenderer pepperSR;
-    public SpriteRenderer pepperCheck;
+    public bool[] hasIngredients = new bool[8];
+    public SpriteRenderer[] ingredientSRs = new SpriteRenderer[8];
+    public SpriteRenderer[] ingredientChecks = new SpriteRenderer[8];
 
-    public SpriteRenderer celerySR;
-    public SpriteRenderer celeryCheck;
+    void Start()
+    {
+        for (int i = 0; i < ingredientSRs.Length; i++)
+        {
+            ingredientSRs[i] = transform.GetChild(1).GetChild(i).GetComponent<SpriteRenderer>();
+            Debug.Log(transform.GetChild(1).GetChild(i).name);
+            Debug.Log(ingredientSRs[i]);
 
-    public SpriteRenderer garlicSR;
-    public SpriteRenderer garlicCheck;
+        }
+        for (int i = 0; i < ingredientChecks.Length; i++)
+        {
+            ingredientChecks[i] = transform.GetChild(2).GetChild(i).GetComponent<SpriteRenderer>();
+            ingredientChecks[i].sprite = xmarkSprite;
+        }
+    }
 
-    public SpriteRenderer chickenSR;
-    public SpriteRenderer chickenCheck;
+    public void CheckOff(string ingredientName)
+    {
+        int index = -1;
+        switch (ingredientName.ToLower())
+        {
+            case "onion":
+                index = 0;
+                break;
+            case "pepper":
+                index = 1;
+                break;
+            case "celery":
+                index = 2;
+                break;
+            case "garlic":
+                index = 3;
+                break;
+            case "chicken":
+                index = 4;
+                break;
+            case "shrimp":
+                index = 5;
+                break;
+            case "fish":
+                index = 6;
+                break;
+            case "crab":
+                index = 7;
+                break;
+            default:
+                Debug.LogWarning("Unknown ingredient: " + ingredientName);
+                return;
+        }
 
-    public SpriteRenderer shrimpSR;
-    public SpriteRenderer shrimpCheck;
+        if (index < 0 || index >= hasIngredients.Length) return;
 
-    public SpriteRenderer fishSR;
-    public SpriteRenderer fishCheck;
-
-    public SpriteRenderer crabSR;
-    public SpriteRenderer crabCheck;
+        hasIngredients[index] = true;
+        ingredientSRs[index].sprite = checkmarkSprite;
+        // Color checkColor = ingredientChecks[index].color;
+        // checkColor.a = 1f; // Make the checkmark fully visible
+        // ingredientChecks[index].color = checkColor;
+    }
 
     /*public void CheckOff()
     {
