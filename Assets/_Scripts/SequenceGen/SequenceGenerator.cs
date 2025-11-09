@@ -13,6 +13,8 @@ public class SequenceGenerator : MonoBehaviour
 
     public AudioSource SoundSource;
     public AudioClip KeypressSound;
+    public AudioClip SuccessSound;
+
     [SerializeField] private float soundVolume = 1f;
 
     public void ResetSequence()
@@ -128,6 +130,7 @@ public class SequenceGenerator : MonoBehaviour
 
     IEnumerator ExitHandler()
     {
+        // SoundSource.PlayOneShot(SuccessSound, soundVolume * 0.02f);
         yield return new WaitUntil(arrowSquares[arrowSquares.Length - 1].GetAnimDone);
         sequencePassed = true;
 
@@ -137,7 +140,6 @@ public class SequenceGenerator : MonoBehaviour
         {
             InventoryDisplay.Instance.CheckOff(ingredientData.ingredientName);
         }
-
         Destroy(gameObject);
     }
     

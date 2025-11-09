@@ -138,6 +138,7 @@ MonoBehaviour:
   - {fileID: 142343594611101113, guid: a21322d0d48024482a41ef5ef40bf5f9, type: 3}
   SoundSource: {fileID: 2054409289969404645}
   KeypressSound: {fileID: 8300000, guid: 522c9115201d27d4781d1eff2f50bb8d, type: 3}
+  SuccessSound: {fileID: 8300000, guid: b690d10a89a46466882db114c26fd5cf, type: 3}
   soundVolume: 1
 --- !u!50 &3271243664074960987
 Rigidbody2D:

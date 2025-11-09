@@ -8,7 +8,7 @@ public class MoveBackground : MonoBehaviour
     {
         // Turn On
         GameManager.Instance.TransitEvent.AddListener(StartMove);
-        // Turn Off
+        // // Turn Off
         GameManager.Instance.ExitTransitEvent.AddListener(StopMove);
     }
 
@@ -16,7 +16,7 @@ public class MoveBackground : MonoBehaviour
     {
         // Turn On
         GameManager.Instance.TransitEvent.RemoveListener(StartMove);
-        // Turn Off
+        // // Turn Off
         GameManager.Instance.ExitTransitEvent.RemoveListener(StopMove);
     }
 
@@ -27,6 +27,7 @@ public class MoveBackground : MonoBehaviour
     }
     void StopMove()
     {
+        if (GameManager.Instance.GetState() == GameManager.StateEnum.end) return;
         startMove = false;
     }
 

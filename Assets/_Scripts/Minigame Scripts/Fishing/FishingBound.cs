@@ -40,7 +40,7 @@ public class FishingBound : MonoBehaviour
 
     void Update()
     {
-        if (playerInArea && Input.GetKeyDown(KeyCode.Q))
+        if (GameManager.Instance.GetState() == GameManager.StateEnum.stop && playerInArea && Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.FishState();
             rodSprite.color = new Color(1f, 1f, 1f, 0f);

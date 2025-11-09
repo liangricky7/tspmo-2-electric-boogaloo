@@ -17,7 +17,7 @@ public class Fishing : MonoBehaviour
     // fishing states
     private bool fishingActive = false; // is in fishing state, not necessarily in fishing minigame
     private bool isFishing = false; // activated when we spawn quicktime event
-    private int chanceToFish = 5; // 1 in X chance each second
+    private int chanceToFish = 4; // 1 in X chance each second
 
     private GameObject playerReference; // reference to player
     private Animator playerAnimator;
@@ -27,6 +27,8 @@ public class Fishing : MonoBehaviour
     public AudioClip CastSound; //License for sound: Fly Fishing Reel Running_4.wav by paulprit -- https://freesound.org/s/507095/ -- License: Creative Commons 0
     public AudioClip ReelSound; //License for sound: Splash Recording 1.m4a by JfishSoM -- https://freesound.org/s/703511/ -- License: Creative Commons 0
 
+    private SequenceGenerator quickTime; // referce to existing qt event
+
     void Start()
     {
         fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
@@ -34,6 +36,7 @@ public class Fishing : MonoBehaviour
         playerAnimator = playerReference.GetComponent<Animator>();
         playerAnimCheck = playerReference.GetComponent<PlayerMoveInteract>();
         SoundsSource = GetComponent<AudioSource>();
+        quickTime = new SequenceGenerator();
     }
 
     void OnEnable()
@@ -63,6 +66,7 @@ public class Fishing : MonoBehaviour
         fishingActive = false;
         GameManager.Instance.StopState();
         fishingIndicator.color = new Color(1f, 1f, 1f, 0f);
+        Destroy(quickTime.gameObject);
     }
 
     // exit fishing
@@ -118,7 +122,7 @@ public class Fishing : MonoBehaviour
         {
             // start quicktime event
             playerAnimator.SetInteger("FishingPhase", 3); // fight for fish
-            SequenceGenerator quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
+            this.quickTime = Instantiate(quickTimePrefab, fishingSpot.position, Quaternion.identity).GetComponent<SequenceGenerator>();
             yield return new WaitUntil(quickTime.GetSequencePassed);
 
             // get random fish

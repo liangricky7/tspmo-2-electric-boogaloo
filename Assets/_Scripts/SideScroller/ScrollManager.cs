@@ -40,7 +40,6 @@ public class ScrollManager : MonoBehaviour
     {
         // Turn On
         GameManager.Instance.TransitEvent.AddListener(StartMove);
-        // Turn Off
         GameManager.Instance.ExitTransitEvent.AddListener(StopMove);
     }
 
@@ -48,7 +47,6 @@ public class ScrollManager : MonoBehaviour
     {
         // Turn On
         GameManager.Instance.TransitEvent.RemoveListener(StartMove);
-        // Turn Off
         GameManager.Instance.ExitTransitEvent.RemoveListener(StopMove);
     }
 
@@ -57,8 +55,10 @@ public class ScrollManager : MonoBehaviour
         // Debug.Log("start move background");
         spaceChecker = true;
     }
+
     void StopMove()
     {
+        if (GameManager.Instance.GetState() == GameManager.StateEnum.end) return;
         spaceChecker = false;
     }
 

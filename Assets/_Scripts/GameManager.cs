@@ -76,6 +76,11 @@ public class GameManager : MonoBehaviour
             }
         }
         previousState = state;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            state = StateEnum.end;
+        }
+        Debug.Log(state);
     }
 
     void CleanUpStates()

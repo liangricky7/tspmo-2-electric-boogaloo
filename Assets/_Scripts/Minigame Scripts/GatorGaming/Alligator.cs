@@ -14,7 +14,7 @@ public class Alligator : MonoBehaviour
     bool playerInArea = false; // player is in trigger zone and gator is attacking
     bool playerIsAttacking = false;
     public bool isAttacking = false; // gator is attacking
-    private int chanceToAttack = 3; // 1 in X chance each second
+    private int chanceToAttack = 16; // 1 in X chance each second
 
     private Animator animatorGator;
 
@@ -29,16 +29,20 @@ public class Alligator : MonoBehaviour
     {
         // Turn On
         GameManager.Instance.StopEvent.AddListener(StartGator);
+        GameManager.Instance.FishEvent.AddListener(StartGator);
         // Turn Off
         GameManager.Instance.ExitStopEvent.AddListener(StopGator);
+        GameManager.Instance.ExitFishEvent.AddListener(StartGator);
     }
 
     void OnDisable()
     {
         // IMPORTANT: Unsubscribe to prevent memory leaks
         GameManager.Instance.StopEvent.RemoveListener(StartGator);
+        GameManager.Instance.FishEvent.RemoveListener(StartGator);
         // Turn Off
         GameManager.Instance.ExitStopEvent.RemoveListener(StopGator);
+        GameManager.Instance.ExitFishEvent.RemoveListener(StartGator);
     }
 
     void StartGator()
@@ -55,6 +59,7 @@ public class Alligator : MonoBehaviour
         playerInArea = false;
         playerIsAttacking = false;
         isAttacking = false;
+        animatorGator.SetBool("GatorAttack", false);
     }
     
     IEnumerator GatorCheck()

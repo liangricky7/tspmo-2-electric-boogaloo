@@ -8,23 +8,28 @@ public class Trigger : MonoBehaviour
     public Transform scroller;
     public ScrollManager scrollManager;
     public float scaleFactor = 10f;
+    public bool hasEnded = false;
 
-    void Update()
+    void OnEnable()
     {
+        // Turn On
+        GameManager.Instance.EndEvent.AddListener(HandleEnd);
+    }
 
-        // if (!scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     scrollManager.spaceChecker = true;
-        // }
-        // else if (scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     scrollManager.spaceChecker = false;
-        // }
+    void OnDisable()
+    {
+        // Turn On
+        GameManager.Instance.EndEvent.RemoveListener(HandleEnd);
+    }
 
+    void HandleEnd()
+    {
+        hasEnded = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (hasEnded) return;
         GameObject panel = GameObject.Instantiate(scrollManager.bgprefab[scrollManager.Randomizer((int)4)], new Vector3(other.transform.position.x + scaleFactor, 0, 0), Quaternion.identity, scroller);
         scrollManager.panelList.Add(panel);
         if (scrollManager.readyForeground)
