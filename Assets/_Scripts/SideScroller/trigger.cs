@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class trigger : MonoBehaviour
+public class Trigger : MonoBehaviour
 {
     public GameObject bagrpref;
     public Transform scroller;
@@ -12,14 +12,14 @@ public class trigger : MonoBehaviour
     void Update()
     {
 
-        if (!scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        {
-            scrollManager.spaceChecker = true;
-        }
-        else if (scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
-        {
-            scrollManager.spaceChecker = false;
-        }
+        // if (!scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     scrollManager.spaceChecker = true;
+        // }
+        // else if (scrollManager.spaceChecker && Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     scrollManager.spaceChecker = false;
+        // }
 
     }
 

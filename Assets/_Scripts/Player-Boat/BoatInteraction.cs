@@ -8,13 +8,11 @@ public class BoatInteraction : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance == null) Debug.Log("GameManager instance is null");
-        if (Input.GetKeyDown(KeyCode.W)) Debug.Log(GameManager.Instance.GetState());
         if (GameManager.Instance.GetState() == GameManager.StateEnum.stop && Input.GetKeyDown(KeyCode.W)) // start boat
         {
             if (alligator.isAttacking)
             {
-                Debug.Log("Gator on boat! Can't start!");
+                // Debug.Log("Gator on boat! Can't start!");
                 return; // maybe indicate you need to get the gator off of the boat
             }
             // Debug.Log("Starting Transit");

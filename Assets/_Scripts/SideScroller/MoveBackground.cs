@@ -1,33 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveBackground : MonoBehaviour
 {
-
     public bool startMove = true;
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        // Turn On
+        GameManager.Instance.TransitEvent.AddListener(StartMove);
+        // Turn Off
+        GameManager.Instance.ExitTransitEvent.AddListener(StopMove);
+    }
+
+    void OnDisable()
+    {
+        // Turn On
+        GameManager.Instance.TransitEvent.RemoveListener(StartMove);
+        // Turn Off
+        GameManager.Instance.ExitTransitEvent.RemoveListener(StopMove);
+    }
+
+    void StartMove()
+    {
+        // Debug.Log("start move background");
+        startMove = true;
+    }
+    void StopMove()
+    {
+        startMove = false;
+    }
+
+
     void Update()
     {
-
-        /*if (!startMove && Input.GetKeyDown(KeyCode.Space))
-        {
-            startMove = true;
-        }
-        else if (startMove && Input.GetKeyDown(KeyCode.Space))
-        {
-            startMove = false;
-        }*/
-
-
         if (startMove)
         {
-
             transform.position += new Vector3(-5f, 0, 0) * Time.deltaTime;
-
         }
-
     }
 
 }
