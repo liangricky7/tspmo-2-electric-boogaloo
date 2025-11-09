@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BackgroundTile
+  - ForegroundTile
   layers:
   - Default
   - TransparentFX
@@ -63,4 +65,10 @@ TagManager:
   - name: Quicktime
     uniqueID: 696219095
 >>>>>>> origin/main
+    locked: 0
+  - name: UI
+    uniqueID: 3429310935
+    locked: 0
+  - name: UIWidget
+    uniqueID: 4173220119
     locked: 0
