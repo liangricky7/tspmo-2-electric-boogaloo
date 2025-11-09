@@ -16,11 +16,14 @@ public class Alligator : MonoBehaviour
     public bool isAttacking = false; // gator is attacking
     private int chanceToAttack = 3; // 1 in X chance each second
 
+    private Animator animatorGator;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(1f, 1f, 1f, 0.2f);  
-        keySprite.color = new Color(1f, 1f, 1f, 0.0f);    
+        spriteRenderer.color = new Color(1f, 1f, 1f, 0.2f);
+        keySprite.color = new Color(1f, 1f, 1f, 0.0f);
+        animatorGator = GetComponent<Animator>(); 
     }
     void OnEnable()
     {
@@ -74,6 +77,7 @@ public class Alligator : MonoBehaviour
     void AttackBoat()
     {
         // Debug.Log("Gator Attacking!");
+        animatorGator.SetBool("GatorAttack", true);
         spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
@@ -140,15 +144,18 @@ public class Alligator : MonoBehaviour
             }
             yield return null;
         }
+        animatorGator.SetBool("GatorAttack", false);
         PlayerReference.GetComponent<PlayerMoveInteract>().ChangeGatorArm();  // change back
         StartCoroutine(Retreat());
     }
     
     IEnumerator Retreat()
     {
+        animatorGator.SetBool("GatorFinishRetreat", true);
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.6f);
         isAttacking = false;
         yield return new WaitForSeconds(2f); // grace period before next attack
+        animatorGator.SetBool("GatorFinishRetreat", false);
         StartCoroutine(GatorCheck());
     }
 
