@@ -26,15 +26,15 @@ public class BGScroller : MonoBehaviour
     }
     private void Move()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isScrolling)
-        {
+        // if (Input.GetKeyDown(KeyCode.Space) && !isScrolling)
+        // {
             isScrolling = true;
 
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && isScrolling)
-        {
-            isScrolling = false;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Space) && isScrolling)
+        // {
+        //     isScrolling = false;
 
-        }
+        // }
     }
 }
