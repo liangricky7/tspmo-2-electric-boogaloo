@@ -121,6 +121,14 @@ public class SequenceGenerator : MonoBehaviour
     {
         yield return new WaitUntil(arrowSquares[arrowSquares.Length - 1].GetAnimDone);
         sequencePassed = true;
+
+        // hard coded check for land ingredient
+        LandIngredient ingredientData = null;
+        if (gameObject.TryGetComponent(out ingredientData))
+        {
+            InventoryDisplay.Instance.CheckOff(ingredientData.ingredientName);
+        }
+
         Destroy(gameObject);
     }
     

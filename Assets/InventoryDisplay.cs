@@ -4,80 +4,100 @@ using UnityEngine;
 
 public class InventoryDisplay : MonoBehaviour
 {
-    public bool hasOnion = false;
-    public bool hasPepper = false;
-    public bool hasCelery = false;
-    public bool hasGarlic = false;
-    public bool hasChicken = false;
-    public bool hasShrimp = false;
-    public bool hasFish = false;
-    public bool hasCrab = false;
+    // 0 -> Onion, 1 -> Pepper, 2 -> Celery, 3 -> Garlic
+    // 4 -> Shrimp, 5 -> Catish, 6 -> Crab
 
-    public SpriteRenderer onionSR;
-    public SpriteRenderer onionCheck;
+    public Sprite checkmarkSprite;
+    public Sprite xmarkSprite;
+    bool openMenu = false;
+    public bool[] hasIngredients = new bool[7];
+    public SpriteRenderer[] ingredientSRs = new SpriteRenderer[7];
+    public SpriteRenderer[] ingredientChecks = new SpriteRenderer[7];
 
-    public SpriteRenderer pepperSR;
-    public SpriteRenderer pepperCheck;
+    public static InventoryDisplay Instance;
 
-    public SpriteRenderer celerySR;
-    public SpriteRenderer celeryCheck;
-
-    public SpriteRenderer garlicSR;
-    public SpriteRenderer garlicCheck;
-
-    public SpriteRenderer chickenSR;
-    public SpriteRenderer chickenCheck;
-
-    public SpriteRenderer shrimpSR;
-    public SpriteRenderer shrimpCheck;
-
-    public SpriteRenderer fishSR;
-    public SpriteRenderer fishCheck;
-
-    public SpriteRenderer crabSR;
-    public SpriteRenderer crabCheck;
-
-    /*public void CheckOff()
+    void Awake()
     {
-        if (hasOnion)
+        if (Instance != null && Instance != this)
         {
-            onionSR.m_Color = color.white;
-            onionCheck.m_Color.a = 0;
+            // Destroy duplicate instances
+            Destroy(gameObject);
         }
-        if (hasPepper)
+        else
         {
-            pepperSR.m_Color = color.white;
-            pepperCheck.m_Color.a = 0;
+            Instance = this; // Assign the current instance
+            DontDestroyOnLoad(gameObject);
         }
-        if (hasCelery)
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < ingredientSRs.Length; i++)
         {
-            celerySR.m_Color = color.white;
-            celeryCheck.m_Color.a = 0;
+            ingredientSRs[i] = transform.GetChild(1).GetChild(i).GetComponent<SpriteRenderer>();
+            // Debug.Log(transform.GetChild(1).GetChild(i).name);
+            // Debug.Log(ingredientSRs[i]);
         }
-        if (hasGarlic)
+        for (int i = 0; i < ingredientChecks.Length; i++)
         {
-            garlicSR.m_Color = color.white;
-            garlicCheck.m_Color.a = 0;
+            ingredientChecks[i] = transform.GetChild(2).GetChild(i).GetComponent<SpriteRenderer>();
+            ingredientChecks[i].sprite = xmarkSprite;
         }
-        if (hasChicken)
+    }
+
+    public void CheckOff(string ingredientName)
+    {
+        int index = -1;
+        switch (ingredientName.ToLower())
         {
-            chickenSR.m_Color = color.white;
-            chickenCheck.m_Color.a = 0;
+            case "onion":
+                index = 0;
+                break;
+            case "bell pepper":
+                index = 1;
+                break;
+            case "celery":
+                index = 2;
+                break;
+            case "garlic":
+                index = 3;
+                break;
+            case "shrimp":
+                index = 4;
+                break;
+            case "catfish":
+                index = 5;
+                break;
+            case "crab":
+                index = 6;
+                break;
+            default:
+                Debug.LogWarning("Unknown ingredient: " + ingredientName);
+                return;
         }
-        if (hasShrimp)
+
+        if (index < 0 || index >= hasIngredients.Length) return;
+
+        hasIngredients[index] = true;
+        ingredientChecks[index].sprite = checkmarkSprite;
+        // Color checkColor = ingredientChecks[index].color;
+        // checkColor.a = 1f; // Make the checkmark fully visible
+        // ingredientChecks[index].color = checkColor;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            shrimpSR.m_Color = color.white;
-            shrimpCheck.m_Color.a = 0;
+            openMenu = !openMenu;
+            if (openMenu)
+            {
+                transform.position -= new Vector3(4.18f, 0f, 0f);
+            }
+            else
+            {
+                transform.position += new Vector3(4.18f, 0f, 0f);
+            }
         }
-        if (hasFish) 
-        {
-            fishSR.m_Color = color.white;
-            fishCheck.m_Color.a = 0;
-        }
-        if (hasCrab)
-        {
-            crabSR.m_Color = color.white;
-            crabCheck.m_Color.a = 0;
-        }
-    }*/
+    }
 }
