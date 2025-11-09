@@ -50,6 +50,8 @@ public class Fishing : MonoBehaviour
 
     IEnumerator FishCheck() // waiting for fish
     {
+        
+
         Debug.Log("enter fish check");
         while (!isFishing)
         {

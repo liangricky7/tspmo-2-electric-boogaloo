@@ -4,6 +4,8 @@ using UnityEngine;
 public class Alligator : MonoBehaviour
 {
     [SerializeField]
+    GameObject PlayerReference;
+    [SerializeField]
     SpriteRenderer keySprite;
     SpriteRenderer spriteRenderer;
     bool playerInTrigger = false; // player is in trigger zone, but gator is not necessarily attacking
@@ -44,12 +46,12 @@ public class Alligator : MonoBehaviour
     {
         // Debug.Log("stop gator");
         StopAllCoroutines();
-        playerInTrigger = false; 
+        playerInTrigger = false;
         playerInArea = false;
         playerIsAttacking = false;
-        isAttacking = false; 
+        isAttacking = false;
     }
-
+    
     IEnumerator GatorCheck()
     {
         // Debug.Log("enter check");
@@ -113,12 +115,20 @@ public class Alligator : MonoBehaviour
 
     IEnumerator HitGator()
     {
-        int hitCount = Random.Range(10, 15);
+        int hitCount = Random.Range(4, 8);
+        Animator animator = PlayerReference.GetComponent<Animator>(); 
+        PlayerMoveInteract playerMove = PlayerReference.GetComponent<PlayerMoveInteract>();
+        playerMove.ChangeGatorArm(); // change to hammer arm
 
         while (hitCount > 0)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                //animate hit
+                animator.SetBool("BeatGator", true);
+                yield return new WaitUntil(() => playerMove.animationDone);
+                animator.SetBool("BeatGator", false);
+
                 hitCount--;
                 spriteRenderer.color = new Color(1f, 0f, 0f, 1f);
                 yield return new WaitForSeconds(0.1f);
@@ -127,6 +137,7 @@ public class Alligator : MonoBehaviour
             }
             yield return null;
         }
+        PlayerReference.GetComponent<PlayerMoveInteract>().ChangeGatorArm();  // change back
         StartCoroutine(Retreat());
     }
     

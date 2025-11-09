@@ -7,7 +7,9 @@ public class PlayerMoveInteract : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     private Rigidbody2D rb;
     private bool canMoving = true;
-    private bool fishingArmOut = false;
+    private bool specialArmOut = false;
+
+    public bool animationDone = true; // boolean to signal that there is an animation playing; used by fishing and gator
 
     void Start()
     {
@@ -22,8 +24,8 @@ public class PlayerMoveInteract : MonoBehaviour
         GameManager.Instance.ExitFishEvent.AddListener(TurnOn);
 
         // Fishing Arm
-        GameManager.Instance.FishEvent.AddListener(ChangeArm);
-        GameManager.Instance.ExitFishEvent.AddListener(ChangeArm);
+        GameManager.Instance.FishEvent.AddListener(ChangeFishingArm);
+        GameManager.Instance.ExitFishEvent.AddListener(ChangeFishingArm);
     }
 
     void OnDisable()
@@ -33,8 +35,8 @@ public class PlayerMoveInteract : MonoBehaviour
         // Turn Off
         GameManager.Instance.ExitFishEvent.RemoveListener(TurnOn);
         // Fishing Arm
-        GameManager.Instance.FishEvent.RemoveListener(ChangeArm);
-        GameManager.Instance.ExitFishEvent.RemoveListener(ChangeArm);
+        GameManager.Instance.FishEvent.RemoveListener(ChangeFishingArm);
+        GameManager.Instance.ExitFishEvent.RemoveListener(ChangeFishingArm);
     }
 
     void Update()
@@ -59,21 +61,52 @@ public class PlayerMoveInteract : MonoBehaviour
     {
         canMoving = false;
     }
-    
-    void ChangeArm()
+
+    public void TurnAnimationOn()
     {
-        fishingArmOut = !fishingArmOut;
-        if (fishingArmOut)
+        animationDone = false;
+    }
+
+    public void TurnAnimationOff()
+    {
+        animationDone = true;
+    }
+
+    void ChangeFishingArm()
+    {
+        specialArmOut = !specialArmOut;
+        if (specialArmOut)
         {
             // Change to fishing arm
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             this.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+
+            // flip
+            this.gameObject.transform.GetChild(3).GetComponent<SpriteRenderer>().flipX = true;
         }
         else
         {
             // Change to normal arm
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            this.gameObject.transform.GetChild(3).GetComponent<SpriteRenderer>().flipX = false;
+        }
+    }
+    
+    public void ChangeGatorArm() // called directly by alligator bc no time
+    {
+       specialArmOut = !specialArmOut;
+        if (specialArmOut)
+        {
+            // Change to hammer arm
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            this.gameObject.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else
+        {
+            // Change to normal arm
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            this.gameObject.transform.GetChild(2).gameObject.SetActive(false);
         }
     }
 }
