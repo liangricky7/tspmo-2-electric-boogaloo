@@ -41,6 +41,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+<<<<<<< HEAD
   - name: sunset
     uniqueID: 4161600503
     locked: 0
@@ -58,4 +59,8 @@ TagManager:
     locked: 0
   - name: foreground
     uniqueID: 2498023481
+=======
+  - name: Quicktime
+    uniqueID: 696219095
+>>>>>>> origin/main
     locked: 0
