@@ -12,7 +12,7 @@ public class Delete : MonoBehaviour
             scrollManager.panelList.Remove(parent);
             Destroy(parent);
             scrollManager.readyForeground = true;
-        } 
+        }
         else
         {
             scrollManager.panelList.Remove(parent);
